@@ -13,8 +13,8 @@ pr_query_cmd = '/volume/buildtools/bin/query-pr'
 #change ETA status if date is dued.
 def change_eta(pr_num, scope_num):
 
-  input_file = 'pr_content_1.txt'
-  output_file = 'pr_content_2.txt'
+  input_file = os.path.join(sys.path[0], 'pr_content_1.txt')
+  output_file = os.path.join(sys.path[0], 'pr_content_2.txt')
   
   # get the system date
   now = datetime.now()
@@ -48,7 +48,7 @@ def change_eta(pr_num, scope_num):
             week,month,day,time,zone,year = fix_eta.split(" ")
             date_string= month + " " + day + " " + year
             date_object = datetime.strptime(date_string, "%b %d %Y")
-            if (date_object < datetime.now() + timedelta(days=2)):
+            if (date_object < datetime.now() + timedelta(days=4)):
               modified_eta = datetime.now() + timedelta(days=7)
               #write to file and print updated date here
               print('ETA is updated to ' + modified_eta.strftime("%Y-%m-%d"))
@@ -87,7 +87,7 @@ def paragraphs(fileobj):
 def query_pr(dev_name):
 
   #query PRs under dev_name 
-  query_file = 'query.txt'
+  query_file = os.path.join(sys.path[0], 'query.txt')
   command_options = ' -x --expr \'Responsible~"' + dev_name + \
           '" | Dev-Owner~"' + dev_name + '"\''
   command = pr_query_cmd + command_options + ' -o '+ query_file
@@ -119,7 +119,8 @@ def query_pr(dev_name):
   os.system(command)
 
 def pr_eta_update():
-  with open('dev_name_list', "r") as f:
+  dev_name_file = os.path.join(sys.path[0],'dev_name_list')
+  with open(dev_name_file, "r") as f:
       for line in f:
           dev_name = (line.split("@")[0].strip())
           if not len(dev_name):
