@@ -4,11 +4,21 @@ import string
 import re
 from datetime import datetime
 from datetime import timedelta
+from os import path
 
 #global varible
 admin_name = 'benliu'
 pr_edit_cmd = '/volume/buildtools/bin/pr-edit '
 pr_query_cmd = '/volume/buildtools/bin/query-pr'
+file_pr_in_veri = 'pr_in_verification.txt'
+
+#record PRs under verification state
+def record_pr_in_verification(pr_num):
+  veri_file = os.path.join(sys.path[0], file_pr_in_veri)
+  with open(veri_file, "a") as f:
+    line = 'https://gnats.juniper.net/web/default/' + pr_num +'\n'
+    print(line)
+    f.write(line)
 
 #change ETA status if date is dued.
 def change_eta(pr_num, scope_num):
@@ -98,16 +108,26 @@ def query_pr(dev_name):
       paras = paragraphs(f)
       for para in paras:
           for line in para.split('\n'):
+            
+            # parser pr number
             if 'Number:' in line:
               pr_number = (line.split(": ")[1].strip())
 
+            # parser owner
+            if 'Responsible' in line:
+              owner = (line.split(": ")[1].strip())
+            
             # parser the scope name and call change_eta
             pattern = re.compile(r'^>State{(\d+)}:')
             m = pattern.match(line)
             if m:
               scope_num = m.group(1)
               scope_state = (line.split(": ")[1].strip()) 
-              if scope_state in ['awaiting-build', 'verify-resolution', 'closed']:
+              if scope_state in ['verify-resolution']:
+                if dev_name is owner:
+                  record_pr_in_verification(pr_number)
+                continue
+              elif scope_state in ['awaiting-build', 'closed']:
                   continue
               #update ETA of PR
               print('update ETA of PR' + pr_number + ' Scope ' + scope_num + \
@@ -127,6 +147,13 @@ def pr_eta_update():
               continue
           print('Dev_name: ' + dev_name)
           pr_number = query_pr(dev_name)
+
+  # mail the information and delete
+  veri_file = os.path.join(sys.path[0], file_pr_in_veri)
+  if path.exists(veri_file):
+    os.system('/usr/bin/mail -t benliu@juniper.net -s pr_in_verificaton < ' + veri_file)
+    command= 'rm -rf ' + veri_file
+    os.system(command)
 
 if __name__ == "__main__":
     pr_eta_update()
