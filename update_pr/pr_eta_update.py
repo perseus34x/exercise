@@ -13,12 +13,32 @@ pr_query_cmd = '/volume/buildtools/bin/query-pr'
 file_pr_in_veri = 'pr_in_verification.txt'
 
 #record PRs under verification state
-def record_pr_in_verification(pr_num):
+def record_pr_in_verification(dev_name, pr_num, scope_num):
+
   veri_file = os.path.join(sys.path[0], file_pr_in_veri)
-  with open(veri_file, "a") as f:
-    line = 'https://gnats.juniper.net/web/default/' + pr_num +'\n'
-    print(line)
-    f.write(line)
+
+  # open again the query_file.
+  query_file = os.path.join(sys.path[0], 'query.txt')
+  #parser output file
+  with open(query_file, "r") as f:
+      
+      paras = paragraphs(f)
+      for para in paras:
+          for line in para.split('\n'):
+            # parser pr number
+            if 'Number:' in line:
+              number = (line.split(": ")[1].strip())
+            if number != pr_num:
+              break
+
+            # parser owner
+            str = 'Responsible{' + scope_num + '}'
+            if str in line:
+              owner = (line.split(": ")[1].strip())
+              if dev_name == owner:
+                with open(veri_file, "a") as f:
+                  line = 'https://gnats.juniper.net/web/default/' + pr_num + '#scope_tab ' + scope_num + '\n'
+                  f.write(line)
 
 #change ETA status if date is dued.
 def change_eta(pr_num, scope_num):
@@ -112,10 +132,11 @@ def query_pr(dev_name):
             # parser pr number
             if 'Number:' in line:
               pr_number = (line.split(": ")[1].strip())
+              continue
 
             # parser owner
-            if 'Responsible' in line:
-              owner = (line.split(": ")[1].strip())
+#            if 'Responsible' in line:
+#              owner = (line.split(": ")[1].strip())
             
             # parser the scope name and call change_eta
             pattern = re.compile(r'^>State{(\d+)}:')
@@ -123,12 +144,13 @@ def query_pr(dev_name):
             if m:
               scope_num = m.group(1)
               scope_state = (line.split(": ")[1].strip()) 
-              if scope_state in ['verify-resolution']:
-                if dev_name is owner:
-                  record_pr_in_verification(pr_number)
-                continue
-              elif scope_state in ['awaiting-build', 'closed']:
+              if scope_state in ['awaiting-build', 'closed']:
                   continue
+              #check the pr in "verify-resolution"state
+              if scope_state in ['verify-resolution']:
+    #            if dev_name is owner:
+                record_pr_in_verification(dev_name, pr_number, scope_num)
+                continue
               #update ETA of PR
               print('update ETA of PR' + pr_number + ' Scope ' + scope_num + \
                       ', State is ' + scope_state)
@@ -148,7 +170,7 @@ def pr_eta_update():
           print('Dev_name: ' + dev_name)
           pr_number = query_pr(dev_name)
 
-  # mail the information and delete
+  # mail pr in verification information, then delete the temp file
   veri_file = os.path.join(sys.path[0], file_pr_in_veri)
   if path.exists(veri_file):
     os.system('/usr/bin/mail -t benliu@juniper.net -s pr_in_verificaton < ' + veri_file)
