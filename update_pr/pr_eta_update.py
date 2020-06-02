@@ -2,6 +2,7 @@ import os
 import sys
 import string
 import re
+import time
 from datetime import datetime
 from datetime import timedelta
 from os import path
@@ -35,7 +36,7 @@ def record_pr_in_verification(dev_name, pr_num, scope_num):
             str = 'Responsible{' + scope_num + '}'
             if str in line:
               owner = (line.split(": ")[1].strip())
-              if dev_name == owner:
+              if owner in [dev_name,'slt-builder']:
                 with open(veri_file, "a") as f:
                   line = 'https://gnats.juniper.net/web/default/' + pr_num + '#scope_tab ' + scope_num + '\n'
                   f.write(line)
@@ -173,6 +174,7 @@ def pr_eta_update():
   # mail pr in verification information, then delete the temp file
   veri_file = os.path.join(sys.path[0], file_pr_in_veri)
   if path.exists(veri_file):
+    time.sleep(5)
     os.system('/usr/bin/mail -t benliu@juniper.net -s pr_in_verificaton < ' + veri_file)
     command= 'rm -rf ' + veri_file
     os.system(command)
