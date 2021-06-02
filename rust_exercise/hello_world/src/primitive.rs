@@ -1,4 +1,5 @@
 pub fn primitive() {
+
     // varible can be type annotated.
     let logical: bool = true;
     let a_float: f64 = 1.0;
