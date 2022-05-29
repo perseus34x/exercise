@@ -113,7 +113,7 @@ def bungee_refeul(chainId, from_addr, destChainId, contract_addr, amount_in_eth)
 
 if __name__ == "__main__":
 
-    # Source addres
+    # Optimism chain to Arbitrum chain 
     srcChainId = 10 # optimism
     destChainId = 42161 #arbitrum
 
