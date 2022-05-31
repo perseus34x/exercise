@@ -104,11 +104,14 @@ def arbitrum_depositEth(chainId, from_addr, contract_addr, amount_in_eth):
     tx = func.buildTransaction(params)
     signed_tx = w3.eth.account.signTransaction(tx, private_key)
     txn = w3.eth.sendRawTransaction(signed_tx.rawTransaction)
-    return {'status': 'success', 'txn_hash': w3.toHex(txn), 'task': 'Bridge ETH'}
+    return {'status': 'success', 'txn_hash': w3.toHex(txn), 'task': 'deposit ETH on Arbitrum'}
   except Exception as e:
-    return {'status': 'failed', 'error': e, 'task': 'Bridge ETH'}
+    return {'status': 'failed', 'error': e, 'task': 'Deposit ETH on Arbitrum'}
 
 if __name__ == "__main__":
+
+    # Arbitrum chain(42161)
+    chainId = 42161
 
     # Source addres
     from_addr = Web3.toChecksumAddress(sys.argv[1])
@@ -116,6 +119,6 @@ if __name__ == "__main__":
 
     amount_in_eth = 0.005
 
-    result = arbitrum_depositEth(42161, from_addr, contract_addr, amount_in_eth)
+    result = arbitrum_depositEth(chainId, from_addr, contract_addr, amount_in_eth)
     print(result)
 
