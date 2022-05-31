@@ -67,7 +67,7 @@ def parse_private_key_from_addr(eth_address):
       if (eth_address[:2] != '0x'):  return None
       if (eth_address == temp_addr): return temp_str
 
-def bridge_arbitrum_eth(chainId, from_addr, contract_addr, amount_in_eth):
+def arbitrum_depositEth(chainId, from_addr, contract_addr, amount_in_eth):
   w3 = get_w3_by_network(chainId)
   if not w3.isConnected():
     return
@@ -110,14 +110,12 @@ def bridge_arbitrum_eth(chainId, from_addr, contract_addr, amount_in_eth):
 
 if __name__ == "__main__":
 
-    chainId = int(sys.argv[1])
-     
     # Source addres
-    from_addr = Web3.toChecksumAddress(sys.argv[2])
+    from_addr = Web3.toChecksumAddress(sys.argv[1])
     contract_addr   = '0x578bade599406a8fe3d24fd7f7211c0911f5b29e'
 
     amount_in_eth = 0.005
 
-    result = bridge_arbitrum_eth(chainId, from_addr, contract_addr, amount_in_eth)
+    result = arbitrum_depositEth(42161, from_addr, contract_addr, amount_in_eth)
     print(result)
 
