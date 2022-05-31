@@ -7,8 +7,8 @@
 ### arbitrum_interact.py
 % python3 arbitrum_interact.py {source address}
 
-### contract_interact.py
-% python3 contract_interact.py {source address} {dest address}
+### arbitrum_usdc_transfer.py
+% python3 arbitrum_usdc_transfer.py {source address} {dest address}
 
 ### bungee_interact.py
 % python3 bungee_interact.py
