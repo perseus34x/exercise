@@ -74,7 +74,6 @@ def bridge_arbitrum_eth(chainId, from_addr, contract_addr, amount_in_eth):
 
   from_addr = Web3.toChecksumAddress(from_addr)
   contract_addr = Web3.toChecksumAddress(contract_addr)
-  print(contract_addr)
 
   # get private key
   private_key = parse_private_key_from_addr(from_addr)
@@ -84,7 +83,6 @@ def bridge_arbitrum_eth(chainId, from_addr, contract_addr, amount_in_eth):
 
   #get the nonce. prevents one from sending the transaction twice
   nonce = w3.eth.getTransactionCount(from_addr)
-  print("nonce %d" % nonce)
   gas_price = w3.eth.gasPrice
   amount_in_wei = w3.toWei(amount_in_eth, 'ether')
   params = {
@@ -100,7 +98,6 @@ def bridge_arbitrum_eth(chainId, from_addr, contract_addr, amount_in_eth):
   }
 
   maxSubmissionCost = int(amount_in_wei * 0.01)
-  print(maxSubmissionCost)
   func = contract.functions.depositEth(maxSubmissionCost)
   #sign the transaction
   try:
@@ -116,7 +113,7 @@ if __name__ == "__main__":
     chainId = int(sys.argv[1])
      
     # Source addres
-    from_addr = '0xa4B435E79Ab8BDb1D76d4F7e7d18d53ADbdB9a05'
+    from_addr = Web3.toChecksumAddress(sys.argv[2])
     contract_addr   = '0x578bade599406a8fe3d24fd7f7211c0911f5b29e'
 
     amount_in_eth = 0.005
