@@ -4,7 +4,6 @@
 ### eth_trans.py
 % python eth_trans.py 
 
-### arbitrum_interact.py
 ### arbitrum_rinkeby_interact.py
 % python3 arbitrum_rinkeby_interact.py {source address}
 
