@@ -5,7 +5,8 @@
 % python eth_trans.py 
 
 ### arbitrum_interact.py
-% python3 arbitrum_interact.py {source address}
+### arbitrum_rinkeby_interact.py
+% python3 arbitrum_rinkeby_interact.py {source address}
 
 ### arbitrum_usdc_transfer.py
 % python3 arbitrum_usdc_transfer.py {source address} {dest address}
