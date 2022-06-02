@@ -1,8 +1,9 @@
 import sys
 from web3 import Web3
 from enum import Enum
+from dynaconf import settings
 
-INFURA_SECRET_KEY = '7a99188377d641cf8bba51559b9ed4d9'
+INFURA_SECRET_KEY = settings.INFURA_PROJECT_ID
 
 class Network_name(Enum): 
  ETH_MAINNET = 'mainnet'
@@ -31,6 +32,8 @@ def get_network_name_by_chainid(chainid):
 # get w3 endpoint by network name
 def get_w3_by_network(chainid=1):
     network = get_network_name_by_chainid(chainid)
+    print(INFURA_SECRET_KEY)
+    return
     infura_url = f'https://{network}.infura.io/v3/{INFURA_SECRET_KEY}'
     w3 = Web3(Web3.HTTPProvider(infura_url))
     return w3
@@ -114,8 +117,10 @@ def arbitrum_usdc_transfer(chainId, from_addr, to_addr, contract_addr, amount_in
 
 if __name__ == "__main__":
 
-    # USDC contract address on arbitrum
+    # USDC transfer on arbitrum chain
+    # arbiturm chain
     chainId = 42161
+    # USDC contract address on arbitrum
     contract_addr   = '0xff970a61a04b1ca14834a43f5de4533ebddb5cc8'
      
     # USDC transfer from source to destination address
