@@ -67,7 +67,7 @@ def parse_private_key_from_addr(eth_address):
       if (eth_address[:2] != '0x'):  return None
       if (eth_address == temp_addr): return temp_str
 
-def arbitrum_depositEth(chainId, from_addr, contract_addr, amount_in_eth):
+def arbitrum_rinkeby_depositEth(chainId, from_addr, contract_addr, amount_in_eth):
   w3 = get_w3_by_network(chainId)
   if not w3.isConnected():
     return
@@ -110,15 +110,18 @@ def arbitrum_depositEth(chainId, from_addr, contract_addr, amount_in_eth):
 
 if __name__ == "__main__":
 
-    # Arbitrum chain(42161)
-    chainId = 42161
+    # Rinkeby chain(4)
+    chainId = 4
 
     # Source addres
     from_addr = Web3.toChecksumAddress(sys.argv[1])
+
+    # rinkeby chain bridge eth to arbitrum
+    # https://rinkeby.etherscan.io/address/0x578bade599406a8fe3d24fd7f7211c0911f5b29e
     contract_addr   = '0x578bade599406a8fe3d24fd7f7211c0911f5b29e'
 
     amount_in_eth = 0.005
 
-    result = arbitrum_depositEth(chainId, from_addr, contract_addr, amount_in_eth)
+    result = arbitrum_rinkeby_depositEth(chainId, from_addr, contract_addr, amount_in_eth)
     print(result)
 
