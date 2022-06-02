@@ -1,8 +1,9 @@
 import sys
 from web3 import Web3
 from enum import Enum
+from dynaconf import settings
 
-INFURA_SECRET_KEY = '7a99188377d641cf8bba51559b9ed4d9'
+INFURA_SECRET_KEY = settings.INFURA_PROJECT_ID
 
 class Network_name(Enum): 
  ETH_MAINNET = 'mainnet'
