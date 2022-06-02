@@ -111,13 +111,12 @@ def arbitrum_rinkeby_depositEth(chainId, from_addr, contract_addr, amount_in_eth
 
 if __name__ == "__main__":
 
-    # Rinkeby chain(4)
-    chainId = 4
-
     # Source addres
     from_addr = Web3.toChecksumAddress(sys.argv[1])
 
     # rinkeby chain bridge eth to arbitrum
+    # Rinkeby chain(4)
+    chainId = 4
     # https://rinkeby.etherscan.io/address/0x578bade599406a8fe3d24fd7f7211c0911f5b29e
     contract_addr   = '0x578bade599406a8fe3d24fd7f7211c0911f5b29e'
 
