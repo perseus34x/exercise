@@ -1,0 +1,13 @@
+[
+  {
+    "inputs":[
+      {"internalType":"contract IERC20","name":"_token","type":"address"},
+      {"internalType":"uint104","name":"_amount","type":"uint104"},
+      {"internalType":"address","name":"_zkSyncAddress","type":"address"}
+    ],
+    "name":"depositERC20",
+    "outputs":[],
+    "stateMutability":"nonpayable",
+    "type":"function"
+  }
+]
