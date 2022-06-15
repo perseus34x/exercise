@@ -114,9 +114,6 @@ def zigzag_bridge(chainId, contract_addr, token, from_addr, amount_in_eth):
       #'gasLimit': "21000",
   }
 
-  # set gas strategy
-  #w3.eth.set_gas_price_strategy(medium_gas_price_strategy)
-
   #get decimals to multiply by token amount
   amount = int(amount_in_eth * 10 **18)
   func = contract.functions.depositERC20(token, amount, from_addr)
