@@ -1,9 +1,5 @@
 import sys
 from web3 import Web3
-from enum import Enum
-from dynaconf import settings
-from web3 import gas_strategies
-from web3.gas_strategies.time_based import medium_gas_price_strategy
 
 from local_types import AddressLike
 from util import (
@@ -17,42 +13,15 @@ from util import (
 from network import (
     get_w3_by_network,        
 )
-
-def eth_addr_parse_from_file(filename):
-  with open(filename, 'r') as f:
-    entry_num=0
-    while True:
-      lines = f.readline().strip() 
-      if not lines:
-        return
-      
-      eth_address, temp_str = lines.split()
-      eth_value = float(temp_str)
-      if (len(eth_address) != 42):  return # len need to take into "0x"
-      if (eth_address[:2] != '0x'): return
-      if (eth_value <= 0): return
-      if (eth_value >= 3): return          # only support small number transfer
-
-      yield eth_address, eth_value
-
-def parse_private_key_from_addr(eth_address):
-  
-  filename = 'private_key.txt'
-  with open(filename, 'r') as f:
-    entry_num=0
-    while True:
-      lines = f.readline().strip() 
-      if not lines:
-        return None
-      
-      temp_addr, temp_str = lines.split()
-      if (len(eth_address) != 42):   return None # len need to take into "0x"
-      if (eth_address[:2] != '0x'):  return None
-      if (eth_address == temp_addr): return temp_str
+from file_parser import (
+    eth_addr_parse_from_file,
+    parse_private_key_from_addr,
+)
 
 def zigzag_bridge(chainId, contract_addr, token, from_addr, amount_in_eth):
   w3 = get_w3_by_network(chainId)
   if not w3.isConnected():
+    print("w3 is not connected")
     return
 
   contract_addr = Web3.toChecksumAddress(contract_addr)
