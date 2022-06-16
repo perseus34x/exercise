@@ -13,7 +13,7 @@ class Network_name(Enum):
  AR_MAINNET = 'arbitrum-mainnet'
  AR_RINKEBY = 'arbitrum-rinkeby'
 
-def _get_network_name_by_chainid(chainid):
+def _get_network_name_by_chainid(chainid) -> str:
     if(chainid == 1): 
         network = Network_name.ETH_MAINNET;
     elif(chainid == 3):
@@ -30,7 +30,7 @@ def _get_network_name_by_chainid(chainid):
     return network.value
 
 # get w3 endpoint by network name
-def get_w3_by_network(chainid=1):
+def get_w3_by_network(chainid=1) -> Web3:
     network = _get_network_name_by_chainid(chainid)
     infura_url = f'https://{network}.infura.io/v3/{INFURA_SECRET_KEY}'
     w3 = Web3(Web3.HTTPProvider(infura_url))

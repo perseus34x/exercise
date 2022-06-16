@@ -17,7 +17,7 @@ def eth_addr_parse_from_file(filename):
 
       yield eth_address, eth_value
 
-def parse_private_key_from_addr(eth_address):
+def parse_private_key_from_addr(eth_address) -> str:
   
   filename = 'private_key.txt'
   with open(filename, 'r') as f:
