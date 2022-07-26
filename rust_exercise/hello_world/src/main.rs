@@ -1,11 +1,16 @@
 fn main() {
-    println!("Hello, world!");
-    println!("I'm a Rustacean");
 
+    println!("=========== Chpter1 Hello world=========");
+    // comments
+    println!("=========== comments =========");
     let x = 5 + /* 90 + */ 5;
     println!("Is `x` 10 or 100? x = {}", x);
 
-    println!("{} days", 31i64);
+    println!();
+    //Print Format
+    println!("=========== Print =========");
+    println!("Hello, world! I'm a Rustacean");
+    println!("{} days", 32i64);
     
     println!("{0}, this is {1}. {1}, this is {0}", "Alice", "Bob");
 
@@ -28,7 +33,6 @@ fn main() {
     println!("Pi is roughly {1:.0$}",  3, pi);
     println!("Pi is roughly {:.*}",  4, pi);
 
-
     #[derive(Debug)]
     struct Structure1(i32);
     #[derive(Debug)]
@@ -37,6 +41,7 @@ fn main() {
     println!("Now {:?} will pirnt.", Deep(Structure1(7)));
 
     #[derive(Debug)]
+    #[allow(dead_code)]
     struct Person<'a> {
         name : &'a str,
         age  : u8
@@ -45,7 +50,6 @@ fn main() {
     let age = 18;
     let peter = Person{name, age};
     println!("{:#?}", peter);
-
 
     use std::fmt;
     struct Structure2(i32);
@@ -90,5 +94,4 @@ fn main() {
     println!("Debug: {:?}", point);
     println!("Display: {} + {}i", point.x, point.y);
     println!("Debug: Complex {{real: {real}, imag: {image} }}", real=point.x, image=point.y);
-
 }
