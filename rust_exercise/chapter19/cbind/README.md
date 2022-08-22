@@ -65,6 +65,7 @@ int main() {
 这样就大工告成。输出结果如下
 
 `C executed form here..
+
 Just called a Rust function from C!`
 
 # 参考文档
