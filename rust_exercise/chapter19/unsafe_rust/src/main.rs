@@ -1,5 +1,13 @@
 use std::slice;
 
+static mut COUNTER: u32 = 0;
+
+fn add_to_count(inc: u32) {
+    unsafe {
+        COUNTER += inc;
+    }
+}
+
 fn main() {
     println!("Hello, world!");
 
@@ -30,6 +38,12 @@ fn main() {
     // FFI
     unsafe {
         println!("Absolute value of -3 according to C: {}", abs(-3));
+    }
+
+    // Accessing or Modifying a Mutable Static Variable
+    add_to_count(3);
+    unsafe {
+        println!("COUNTER: {}", COUNTER);
     }
 }
 
