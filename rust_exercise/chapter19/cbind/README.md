@@ -41,7 +41,7 @@ pub extern "C" fn call_from_c() {
 
 `cbindgen --config cbindgen.toml --crate my_rust_library --output my_header.h —lang c`
 
-# 编写一个C程序并且开始编译
+# 3.  编写一个C程序并且开始编译
 
 编写一个简单的C文件作为测试用例。代码如下：
 
