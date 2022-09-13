@@ -1,7 +1,0 @@
-.env
-__pycache__
-*.pyc 
-*.txt
-
-# Ignore dynaconf secret files
-.secrets.*
