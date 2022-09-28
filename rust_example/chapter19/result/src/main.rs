@@ -1,4 +1,5 @@
 
+
 mod checked {
     use std::fmt::Write;
     // Mathematical "errors" we want to catch
@@ -60,7 +61,7 @@ mod checked {
 
     pub fn op_modified(x: f64, y: f64) {
         let mut msg = String::new();
-        match op_(x, y) {
+        let _ = match op_(x, y) {
             Err(why) => write!(msg, "{}", match why {
                 MathError::NonPositiveLogarithm
                     => "logarithm of non-positive number",
@@ -70,7 +71,7 @@ mod checked {
                     => "square root of negative number",
             }),
             Ok(value) => write!(msg, "{}", value),
-        }
+        };
         println!("{}", msg);
     }
 }
