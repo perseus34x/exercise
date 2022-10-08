@@ -31,4 +31,12 @@ fn main() {
             println!("{} has three consecutive vowels!", word);
         }
     }
+
+    let mut s = String::from("hello world");
+    let bytes = s.as_bytes();
+    for &item in bytes.iter() {
+        if item == b' ' {
+            println!("there is a space");
+        }
+    }
 }
