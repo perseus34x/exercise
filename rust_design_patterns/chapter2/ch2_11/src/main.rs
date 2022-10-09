@@ -17,7 +17,7 @@ fn main() {
     println!("closuere is {:?}", closure());
 
     let num4 = 4;
-    let num5 =5;
+    let num5 = 5;
     let _closure1 = {
         let ret = move || {
             num4 + num5
@@ -27,8 +27,10 @@ fn main() {
     };
     println!("num4 is {}", num4);
 
-    thread::spawn(move || {println!("num5 is {}", num5)})
+    let s = String::from("Hello");
+    thread::spawn(move || {println!("s is {}", s);})
            .join()
            .unwrap();
-    println!("num5 is {}", num5);
+    // s is already moved into closure.
+    //println!("s is {}", s);
 }
