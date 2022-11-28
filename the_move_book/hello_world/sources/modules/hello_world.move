@@ -2,7 +2,7 @@
 address 0x2 {
     module Coin {
 
-        struct Coin has drop {
+        struct Coin has drop,copy {
             value: u64,
         }
 
@@ -19,10 +19,15 @@ address 0x2 {
             value
         }
 
-        public fun test() {
-            let _a1 = @0x1;
-            let _a2 = @0x2;
-            // ... and so on for every other possible address
+        public fun modify_value(coin: &mut Coin): u64 {
+            let c_ref = coin;
+            // modify the refered value
+            c_ref.value =150;
+
+            // modify the value in the copied item
+            let counterfeit = *c_ref;
+            counterfeit.value = 200;
+            counterfeit.value
         }
     }
 }
