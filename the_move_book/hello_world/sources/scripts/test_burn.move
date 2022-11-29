@@ -2,12 +2,12 @@ script {
     use Std::Debug::print;
     use Std::Vector;
     use 0x2::Coin;
-    use Std::Signer;
+    //use Std::Signer;
 
-    fun main(s: signer) {
-        assert!(Signer::address_of(&s) == @0x42, 0);
-        
+    fun main() {
+
         let coin = Coin::mint(100);
+        print(&Coin::modify_value(&mut coin));
         print(&Coin::value(&coin));
         Coin::burn(coin);   
 
@@ -20,5 +20,4 @@ script {
         assert!(Vector::pop_back(&mut v) == 6, 42);
         assert!(Vector::pop_back(&mut v) == 5, 42);
     }
-
 }
